@@ -42,10 +42,21 @@ class ChildFragment: Fragment() {
                 .load(product?.images?.lastOrNull())
                 .into(ivProductImage)
 
+            starOne.isSelected = true
+
             tvProductTitle.text = product?.title
             tvProductDescription.text = product?.description
+            product?.rating?.toInt()?.let { fillStar(it) }
+            tvStarReview.text = product?.rating.toString()
         }
 
+    }
+
+    private fun fillStar(star: Int) {
+        val starIds = listOf(binding.starOne, binding.starTwo, binding.starThree, binding.starFour, binding.starFive)
+        for (i in 0 until star) {
+            starIds[i].isSelected = true
+        }
     }
 
 }

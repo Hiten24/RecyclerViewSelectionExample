@@ -41,5 +41,55 @@
             app:layout_constraintTop_toBottomOf="@id/tv_product_title"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <LinearLayout
+            android:id="@+id/layout_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/tv_product_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_description">
+
+            <ImageView
+                android:id="@+id/star_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:src="@drawable/ic_star"/>
+
+            <ImageView
+                android:id="@+id/star_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"/>
+
+            <ImageView
+                android:id="@+id/star_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"/>
+
+            <ImageView
+                android:id="@+id/star_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"/>
+
+            <ImageView
+                android:id="@+id/star_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"/>
+
+            <TextView
+                android:id="@+id/tv_star_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="4.5"
+                android:layout_marginStart="4dp"
+                android:includeFontPadding="false"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

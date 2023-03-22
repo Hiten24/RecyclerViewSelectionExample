@@ -47,6 +47,21 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_margin="8dp"/>
 
+                <TextView
+                    android:id="@+id/tv_sponsored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sponsored"
+                    android:visibility="gone"
+                    android:background="#ff0000"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="2dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="8dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

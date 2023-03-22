@@ -43,6 +43,8 @@ class ProductAdapter(
                     onSelectOfProduct.invoke(product)
                 }
 
+                tvSponsored.isVisible = product?.sponsored ?: false
+
             }
         }
 

@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="select_color">#C2E7FF</color>
+    <color name="star_color">#FFA41C</color>
 </resources>

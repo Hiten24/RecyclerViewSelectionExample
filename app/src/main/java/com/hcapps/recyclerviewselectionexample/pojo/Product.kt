@@ -20,7 +20,8 @@ data class Product(
     val rating: Float,
     val brand: String,
     val thumbnail: String,
-    val images: List<String>
+    val images: List<String>,
+    val sponsored: Boolean
 ): Parcelable {
 
     companion object {
