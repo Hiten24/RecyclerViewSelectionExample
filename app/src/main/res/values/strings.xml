@@ -3,4 +3,6 @@
     <string name="product_thumbnail">product thumbnail</string>
     <string name="apple">Apple</string>
     <string name="description">description</string>
+    <string name="delete">Delete</string>
+    <string name="select_all">Select All</string>
 </resources>

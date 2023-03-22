@@ -1,11 +1,11 @@
 package com.hcapps.recyclerviewselectionexample
 
 import android.annotation.SuppressLint
+import android.app.Notification.Action
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
@@ -21,6 +21,7 @@ class HomeFragment: Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var productAdapter: ProductAdapter
+    private var selectionActionBar: ActionMode? = null
 
     val selectedProduct = mutableListOf<Long>()
 
@@ -73,15 +74,66 @@ class HomeFragment: Fragment() {
                 }
                 Log.d("HomeFragment", "onItemStateChanged: $selectedProduct")
 
+                if (selectedProduct.isNotEmpty()) {
+                    if (selectionActionBar == null) {
+                        selectionActionBar = requireActivity().startActionMode(actionBarCallback)
+                    }
+                    selectionActionBar?.title = "${selectedProduct.size} selected"
+                } else {
+                    selectionActionBar?.finish()
+                    selectionActionBar = null
+                }
+
             }
 
             @SuppressLint("RestrictedApi")
             override fun onSelectionCleared() {
                 super.onSelectionCleared()
                 selectedProduct.removeAll(selectedProduct)
+                selectionActionBar?.finish()
+                selectionActionBar = null
             }
 
         }
         productAdapter.tracker?.addObserver(selectionObserver)
+    }
+
+    val actionBarCallback = object: ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            requireActivity().menuInflater.inflate(R.menu.selection_contextual_action_bar, menu)
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            return when (item?.itemId) {
+                R.id.delete -> {
+                    if (selectedProduct.isNotEmpty()) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Deleting selected file...",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    productAdapter.tracker?.clearSelection()
+                    true
+                }
+                R.id.select_all -> {
+                    productAdapter.tracker?.setItemsSelected(
+                        productAdapter.differ.currentList.map { it.id },
+                        true
+                    )
+                    true
+                }
+                else -> false
+            }
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+            productAdapter.tracker?.clearSelection()
+        }
     }
 }
