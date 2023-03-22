@@ -62,7 +62,11 @@ class HomeFragment: Fragment() {
         val productSelectionPredicates = object: SelectionTracker.SelectionPredicate<Long>() {
             override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
                 val item = productAdapter.getItem(key)
-                return item?.sponsored?.not() ?: true
+                if (item?.sponsored == true) {
+                    Toast.makeText(requireContext(), "You can't select sponsored product.", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+                return true
             }
 
             override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean {
