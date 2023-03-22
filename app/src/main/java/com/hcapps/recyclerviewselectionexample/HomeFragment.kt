@@ -55,6 +55,25 @@ class HomeFragment: Fragment() {
     }
 
     private fun setTracker(): SelectionTracker<Long> {
+
+        /**
+         * custom selection we can ignore sponsored product to not to be selected
+         */
+        val productSelectionPredicates = object: SelectionTracker.SelectionPredicate<Long>() {
+            override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
+                val item = productAdapter.getItem(key)
+                return item?.sponsored?.not() ?: true
+            }
+
+            override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean {
+                return true
+            }
+
+            override fun canSelectMultiple(): Boolean {
+                return true
+            }
+        }
+
         return SelectionTracker.Builder(
             "product_selector",
             binding.rvHome,
@@ -62,7 +81,7 @@ class HomeFragment: Fragment() {
             ProductDetailsLookUp(binding.rvHome),
             StorageStrategy.createLongStorage()
         )
-            .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+            .withSelectionPredicate(productSelectionPredicates)
             .build()
     }
 

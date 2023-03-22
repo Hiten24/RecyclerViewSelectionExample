@@ -72,6 +72,10 @@ class ProductAdapter(
 
     val differ = AsyncListDiffer(this, differCallback)
 
+    fun getItem(id: Long): Product? {
+        return differ.currentList.firstOrNull { it.id == id }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(
             ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
