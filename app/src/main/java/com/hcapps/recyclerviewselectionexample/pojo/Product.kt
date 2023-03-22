@@ -1,14 +1,17 @@
 package com.hcapps.recyclerviewselectionexample.pojo
 
 import android.content.Context
+import android.os.Parcelable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.parcelize.Parcelize
 import java.io.IOException
 
 data class ProductData(
     val products: List<Product>
 )
 
+@Parcelize
 data class Product(
     val id: Long,
     val title: String,
@@ -18,7 +21,7 @@ data class Product(
     val brand: String,
     val thumbnail: String,
     val images: List<String>
-) {
+): Parcelable {
 
     companion object {
         fun parseProductJson(context: Context): ProductData? {

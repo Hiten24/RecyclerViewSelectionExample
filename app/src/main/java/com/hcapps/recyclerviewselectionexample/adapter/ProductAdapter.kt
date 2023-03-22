@@ -17,7 +17,9 @@ import com.hcapps.recyclerviewselectionexample.R
 import com.hcapps.recyclerviewselectionexample.databinding.ItemBinding
 import com.hcapps.recyclerviewselectionexample.pojo.Product
 
-class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    private val onSelectOfProduct: (Product?) -> Unit
+): RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     var tracker: SelectionTracker<Long>? = null
 
@@ -36,6 +38,10 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
                 ivSelection.isVisible = isSelected
                 val backgroundColor = if (isSelected) R.color.select_color else R.color.white
                 card.setCardBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(card.context, backgroundColor)))
+
+                card.setOnClickListener {
+                    onSelectOfProduct.invoke(product)
+                }
 
             }
         }

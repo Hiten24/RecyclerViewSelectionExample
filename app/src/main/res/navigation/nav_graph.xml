@@ -8,12 +8,24 @@
         android:id="@+id/homeFragment"
         android:name="com.hcapps.recyclerviewselectionexample.HomeFragment"
         android:label="HomeFragment" >
+
         <action
             android:id="@+id/action_homeFragment_to_childFragment"
             app:destination="@id/childFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/childFragment"
         android:name="com.hcapps.recyclerviewselectionexample.ChildFragment"
-        android:label="ChildFragment" />
+        android:label="ChildFragment" >
+
+        <argument
+            android:name="product"
+            app:argType="com.hcapps.recyclerviewselectionexample.pojo.Product"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+    </fragment>
+
 </navigation>

@@ -6,11 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.hcapps.recyclerviewselectionexample.databinding.FragmentChildBinding
+import com.hcapps.recyclerviewselectionexample.pojo.Product
 
 class ChildFragment: Fragment() {
 
     private lateinit var binding: FragmentChildBinding
+    private val args by navArgs<ChildFragmentArgs>()
+    private var product: Product? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,12 +24,28 @@ class ChildFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChildBinding.inflate(inflater, container, false)
+        product = args.product
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(requireContext(), "Child Fragment", Toast.LENGTH_SHORT).show()
+
+        if (product == null) {
+            Toast.makeText(requireContext(), "Something wrong with this product, Try Again", Toast.LENGTH_SHORT).show()
+            findNavController().navigateUp()
+        }
+
+        with(binding) {
+
+            Glide.with(this@ChildFragment)
+                .load(product?.images?.lastOrNull())
+                .into(ivProductImage)
+
+            tvProductTitle.text = product?.title
+            tvProductDescription.text = product?.description
+        }
+
     }
 
 }
