@@ -1,6 +1,8 @@
 package com.hcapps.recyclerviewselectionexample
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +14,15 @@ import com.hcapps.recyclerviewselectionexample.adapter.MediaKeyProvider
 import com.hcapps.recyclerviewselectionexample.adapter.ProductAdapter
 import com.hcapps.recyclerviewselectionexample.adapter.ProductDetailsLookUp
 import com.hcapps.recyclerviewselectionexample.databinding.FragmentHomeBinding
+import com.hcapps.recyclerviewselectionexample.pojo.Product
 import com.hcapps.recyclerviewselectionexample.pojo.Product.Companion.parseProductJson
 
 class HomeFragment: Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var productAdapter: ProductAdapter
+
+    val selectedProduct = mutableListOf<Long>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +37,7 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = setupProductAdapter()
         adapter.differ.submitList(parseProductJson(requireContext())?.products)
+        selectionObserver()
     }
 
     private fun setupProductAdapter(): ProductAdapter {
@@ -53,4 +59,29 @@ class HomeFragment: Fragment() {
             .build()
     }
 
+    private fun selectionObserver() {
+        val selectionObserver = object: SelectionTracker.SelectionObserver<Long>() {
+
+            override fun onItemStateChanged(key: Long, selected: Boolean) {
+                super.onItemStateChanged(key, selected)
+                if (selected) {
+                    if (!selectedProduct.contains(key)) {
+                        selectedProduct.add(key)
+                    }
+                } else {
+                    selectedProduct.remove(key)
+                }
+                Log.d("HomeFragment", "onItemStateChanged: $selectedProduct")
+
+            }
+
+            @SuppressLint("RestrictedApi")
+            override fun onSelectionCleared() {
+                super.onSelectionCleared()
+                selectedProduct.removeAll(selectedProduct)
+            }
+
+        }
+        productAdapter.tracker?.addObserver(selectionObserver)
+    }
 }
