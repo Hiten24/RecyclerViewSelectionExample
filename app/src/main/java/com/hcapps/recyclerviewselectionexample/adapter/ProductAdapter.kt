@@ -34,8 +34,8 @@ class ProductAdapter: RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
                     .into(thumbnail)
 
                 ivSelection.isVisible = isSelected
-                val backgroundColor = if (isSelected) ColorStateList.valueOf(ContextCompat.getColor(card.context, R.color.select_color)) else null
-                card.setCardBackgroundColor(backgroundColor)
+                val backgroundColor = if (isSelected) R.color.select_color else R.color.white
+                card.setCardBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(card.context, backgroundColor)))
 
             }
         }

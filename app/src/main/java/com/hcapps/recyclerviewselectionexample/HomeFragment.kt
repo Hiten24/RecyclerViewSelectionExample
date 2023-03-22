@@ -36,8 +36,8 @@ class HomeFragment: Fragment() {
 
     private fun setupProductAdapter(): ProductAdapter {
         productAdapter = ProductAdapter()
-        productAdapter.tracker = setTracker()
         binding.rvHome.adapter = productAdapter
+        productAdapter.tracker = setTracker()
         return productAdapter
     }
 
